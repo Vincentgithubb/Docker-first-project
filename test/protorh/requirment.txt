@@ -1,0 +1,8 @@
+uvicorn
+fastapi
+sqlalchemy
+databases
+pycopg2
+sqlalchemy-utils
+python-multipart
+unidecode

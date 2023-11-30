@@ -1,0 +1,21 @@
+version: "3"
+services:
+  protorh:
+    build:
+      context: ./protorh
+    volumes: -./protorh:/app
+    ports:
+      - "4242:4242"
+    restart: on-failure
+    env_file:
+      - ./protorh.env
+    depends_on:
+      - postgresdb
+
+  postgresdb:
+    image: postgres:13
+    env_file:
+      - ./protorh.env
+    restart: on-failure
+    volumes:
+      - ./volumes/postgres:/var/lib/postgressql/data
