@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  redis:
+    build:
+      context: ./redis
+    networks:
+      - back-end
+
+  postgres:
+    build:
+      context: ./postgres
+    networks:
+      - back-end
+
+  vote:
+    build:
+      context: ./vote
+    networks:
+      - back-end
+      - front-end
+
+  result:
+    build:
+      context: ./result
+    networks:
+      - back-end
+      - front-end
+
+  worker:
+    build:
+      context: ./worker
+    networks:
+      - back-end
+
+networks:
+  back-end:
+    driver: bridge
+  front-end:
+    driver: bridge
