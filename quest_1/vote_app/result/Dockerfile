@@ -1,12 +1,12 @@
-FROM debian:12
+FROM debian
 
-COPY serveur.js /app/
+COPY server.js /app/
 COPY views /app/views
 
 WORKDIR /app
 
-RUN sudo apt update && sudo apt install nodejs npm && npm install
+RUN npm install
 
 EXPOSE 3000
 
-CMD [ "node", "serveur.js" ]
+CMD ["node", "server.js"]

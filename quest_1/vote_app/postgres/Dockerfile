@@ -1,12 +1,10 @@
-FROM debian:12
+FROM postgres:latest
 
-EXPOSE 5232
+EXPOSE 5432
 
-RUN apt-get update && \
-    apt-get install -y postgresql
+COPY initdb /docker-entrypoint-initdb.d/
 
-COPY ./initdb /docker-entrypoint-initdb.d/
 
-VOLUME [ "/var/lib/postgresql/data" ]
+VOLUME /var/lib/postgresql/data
 
-CMD ["postgresql"]
+CMD ["postgres"]

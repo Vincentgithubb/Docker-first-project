@@ -1,16 +1,13 @@
-FROM debian:12
+FROM debian
 
-COPY Programm.cs /app/
+RUN apt-get update && apt-get install -y wget
+
+RUN wget -O dotnet.tar.gz https://download.visualstudio.microsoft.com/download/pr/ce4b566e-5465-47e8-96ce-c702558c184f/20b9d9b647f3e65af91f7f8f01f30fc1/dotnet-sdk-5.0.400-linux-x64.tar.gz
+RUN mkdir -p /usr/share/dotnet && tar -C /usr/share/dotnet -xzf dotnet.tar.gz
+RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
+
+COPY Program.cs /app/
 
 WORKDIR /app
 
-RUN sudo apt update && sudo apt install -y wget
-RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-RUN sudo dpkg -i packages-microsoft-prod.deb
-RUN rm packages-microsoft-prod.deb
-
-RUN sudo apt-get update && sudo apt-get install -y dotnet-sdk-8.0
-
-RUN sudo apt-get update && sudo apt-get install -y aspnetcore-runtime-8.0
-
-CMD [ "dotnet", "run" ]
+CMD ["dotnet", "run"]

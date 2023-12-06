@@ -1,5 +1,5 @@
-FROM debian:12
+FROM Debian
 
 EXPOSE 6379
 
-CMD ["redis_serveur", "--bind", "0.0.0.0", "--port"? "6379"]
+CMD ["redis-server", "--bind", "0.0.0.0", "--port", "6379"]
