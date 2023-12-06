@@ -2,6 +2,11 @@ FROM debian:12
 
 EXPOSE 5232
 
-VOLUME [ "/var/lib/postgressql/data" ]
+RUN apt-get update && \
+    apt-get install -y postgresql
 
-CMD ["postgressql", "--host", "0.0.0.0", "--port"? "5432"]
+COPY ./initdb /docker-entrypoint-initdb.d/
+
+VOLUME [ "/var/lib/postgresql/data" ]
+
+CMD ["postgresql"]
