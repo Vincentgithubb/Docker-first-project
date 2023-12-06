@@ -1,10 +1,16 @@
-FROM postgres:latest
+FROM debian:12
+
+RUN apt-get update && apt-get install -y postgresql
+
+COPY ./postgres/postgres.env /etc/postgres.env
+VOLUME /var/lib/postgresql/data
 
 EXPOSE 5432
 
-COPY initdb /docker-entrypoint-initdb.d/
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=postgres
+ENV POSTGRES_DB=db
+ENV POSTGRES_HOST=db
+ENV POSTGRES_PORT=4000
 
-
-VOLUME /var/lib/postgresql/data
-
-CMD ["postgres"]
+CMD ["/usr/lib/postgresql/15/bin/postgres", "-h", "0.0.0.0"]

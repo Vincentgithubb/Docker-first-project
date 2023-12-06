@@ -1,12 +1,14 @@
-FROM python:3.11-slim
+FROM debian:12
 
-COPY app.py requirements.txt /app/
-COPY templates /app/templates
-COPY static /app/static
 WORKDIR /app
+COPY . .
 
-RUN pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 5000
+RUN apt update
+RUN apt install -y python3 python3-pip
 
-CMD ["python", "app.py"]
+RUN pip3 install -r requirements.txt --break-system-packages
+
+EXPOSE 80
+
+CMD ["gunicorn", "app:app", "-w", "2", "-b", "0.0.0.0:80", "--log-file=-", "--access-logfile=-", "--keep-alive=0"]

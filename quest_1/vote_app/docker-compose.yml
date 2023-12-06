@@ -7,11 +7,15 @@ services:
     networks:
       - back-end
 
-  postgres:
+  db:
     build:
       context: ./postgres
     networks:
       - back-end
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    env_file:
+      - postgres.env
 
   vote:
     build:
@@ -38,3 +42,6 @@ networks:
     driver: bridge
   front-end:
     driver: bridge
+
+volumes:
+  postgres-data:
